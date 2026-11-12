@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#101a35">
+  <meta name="description" content="Explore a live product catalog, discover new favorites, and keep your shortlist across browser visits.">
+  <title>Curate — Product Explorer & Favorites</title>
+  <link rel="stylesheet" href="style.css">
+  <script src="app.js" defer></script>
+</head>
+<body>
+  <div class="app-shell">
+    <header class="topbar" aria-label="Site header">
+      <a class="brand" href="#top" aria-label="Curate, back to top">
+        <span class="brand-mark" aria-hidden="true">✳</span>
+        <span>curate<span class="brand-dot">.</span></span>
+      </a>
+      <div class="topbar-right">
+        <span class="topbar-caption">A little collection of good finds</span>
+        <a class="nav-saved" href="#favorites-panel" aria-label="Jump to saved favorites">
+          <span aria-hidden="true">♡</span> Saved <span id="nav-favs-count" class="nav-count">0</span>
+        </a>
+      </div>
+    </header>
+
+    <main id="top">
+      <section class="hero" aria-labelledby="hero-title">
+        <div class="hero-copy">
+          <div class="eyebrow"><span class="sparkle" aria-hidden="true">✦</span> THE EVERYDAY DISCOVERY EDIT</div>
+          <h1 id="hero-title">Find something<br><em>worth keeping.</em></h1>
+          <p>Discover products from a live collection, save what catches your eye, and come back to your favorites anytime.</p>
+          <a class="hero-link" href="#explore">Explore the collection <span aria-hidden="true">↗</span></a>
+        </div>
+        <div class="hero-art" aria-hidden="true">
+          <span class="art-orbit art-orbit-one"></span>
+          <span class="art-orbit art-orbit-two"></span>
+          <div class="art-card art-card-back"><span>discover</span><strong>GOOD<br>THINGS</strong><small>VOL. 01 — SELECTED FINDS</small></div>
+          <div class="art-card art-card-front"><span class="art-icon">✳</span><strong>keep<br>curious.</strong><span class="art-line"></span><small>the shortlist starts here</small></div>
+          <div class="art-sticker">✦<br>made to<br>discover</div>
+        </div>
+      </section>
+
+      <section class="workspace" id="explore" aria-label="Product explorer workspace">
+        <div class="section-heading">
+          <div>
+            <div class="section-kicker">YOUR PERSONAL EDIT</div>
+            <h2>Explore the collection<span class="heading-period">.</span></h2>
+          </div>
+          <div class="connection-pill" id="connection-pill"><span class="connection-dot"></span><span id="connection-text">Connecting to catalog</span></div>
+        </div>
+
+        <div class="summary-row" aria-label="Collection overview">
+          <div class="summary-cell">
+            <span class="summary-label">IN THE CATALOG</span>
+            <span class="summary-value" id="catalog-count">—</span>
+          </div>
+          <div class="summary-cell">
+            <span class="summary-label">CURRENT RESULTS</span>
+            <span class="summary-value" id="summary-results-count">—</span>
+          </div>
+          <div class="summary-cell">
+            <span class="summary-label">YOUR FAVORITES</span>
+            <span class="summary-value" id="summary-favs-count">0</span>
+          </div>
+          <div class="summary-message">Collect now.<br><span>Rediscover later.</span> <span class="summary-sun" aria-hidden="true">✳</span></div>
+        </div>
+
+        <div class="controls-card" role="search" aria-label="Search catalog">
+          <form id="search-form" class="search-form" autocomplete="off">
+            <label for="search-input" class="search-field">
+              <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><circle cx="11" cy="11" r="6.5"/><path d="m16 16 4.5 4.5"/></svg>
+              <input id="search-input" type="search" placeholder="Search for a product..." aria-label="Search products by name" maxlength="100">
+            </label>
+            <button type="submit" id="search-btn" class="btn btn-primary">Search <span aria-hidden="true">↗</span></button>
+            <button type="button" id="reset-btn" class="btn btn-quiet">Show all</button>
+          </form>
+          <div class="filter-row">
+            <div id="category-filters" class="category-filters" aria-label="Filter by category">
+              <span class="filter-placeholder">Categories will appear here.</span>
+            </div>
+            <label class="sort-label" for="sort-select">Sort by
+              <select id="sort-select" aria-label="Sort products">
+                <option value="featured">Featured</option>
+                <option value="price-asc">Price: low to high</option>
+                <option value="price-desc">Price: high to low</option>
+                <option value="title">Name: A–Z</option>
+              </select>
+            </label>
+          </div>
+        </div>
+
+        <div class="status-msg" id="status-msg" role="status" aria-live="polite" aria-atomic="true"></div>
+
+        <div class="dashboard-grid">
+          <section class="panel catalog-panel" aria-labelledby="products-title">
+            <div class="panel-header">
+              <div>
+                <span class="panel-kicker">01 / DISCOVER</span>
+                <h3 id="products-title">Available products</h3>
+              </div>
+              <span class="count-badge" id="results-count">0 items</span>
+            </div>
+            <div id="results-grid" class="cards-container" aria-label="Product results">
+              <!-- Populated by the single render() function in app.js -->
+            </div>
+          </section>
+
+          <aside class="panel favorites-panel" id="favorites-panel" aria-labelledby="favorites-title">
+            <div class="favorites-sticky">
+              <div class="panel-header">
+                <div>
+                  <span class="panel-kicker">02 / YOUR SHORTLIST</span>
+                  <h3 id="favorites-title">My favorites <span aria-hidden="true">♡</span></h3>
+                </div>
+                <span class="count-badge count-badge-peach" id="favs-count">0 saved</span>
+              </div>
+              <p class="favorites-caption">A space for the things you love. Your picks stay here when you refresh.</p>
+              <div id="favs-list" class="favorites-list" aria-label="Saved products">
+                <!-- Populated by render() from state.favorites -->
+              </div>
+              <p class="storage-note"><span aria-hidden="true">↻</span> Automatically saved in this browser</p>
+            </div>
+          </aside>
+        </div>
+      </section>
+    </main>
+
+    <footer class="footer">
+      <span class="footer-brand">curate<span>.</span></span>
+      <span>Product discovery, made personal.</span>
+      <span>Built with vanilla JavaScript · Live REST API</span>
+    </footer>
+  </div>
+</body>
+</html>
